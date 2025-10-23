@@ -8,36 +8,41 @@ use Base3\Base3Ilias\PageComponent\AbstractPageComponentPluginGUI;
  */
 class ilBase3ChatbotPageComponentPluginGUI extends AbstractPageComponentPluginGUI {
 
-	protected function getPageComponentName(): string {
-		return 'BASE3 Chatbot';
-	}
+        protected function getPageComponentName(): string {
+                return 'BASE3 Chatbot';
+        }
 
-	protected function getPageComponentDesc(): string {
-		return 'BASE3 Chatbot Page Component';
-	}
+        protected function getPageComponentDesc(): string {
+                return 'BASE3 Chatbot Page Component';
+        }
 
-	protected function getDefaultProps(): array {
-		return ['service' => ''];
-	}
+        protected function getDefaultProps(): array {
+                return ['service' => '', 'lang' => 'de-DE'];
+        }
 
-	protected function setFormContent(ilPropertyFormGUI $form, array $props): void {
-		$pageModuleEndpointControl = new ilTextInputGUI('Service Endpoint', 'service');
-		$pageModuleEndpointControl->setValue($props['service']);
-		$form->addItem($pageModuleEndpointControl);
-	}
+        protected function setFormContent(ilPropertyFormGUI $form, array $props): void {
+                $pageModuleServiceControl = new ilTextInputGUI('Service Endpoint', 'service');
+                $pageModuleServiceControl->setValue($props['service']);
+                $form->addItem($pageModuleServiceControl);
 
-	protected function getPresentationHtml(array $a_properties, string $plugin_version): string {
+                $pageModuleLangControl = new ilTextInputGUI('Language', 'lang');
+                $pageModuleLangControl->setValue($props['lang']);
+                $form->addItem($pageModuleLangControl);
+        }
 
-		// include client scripts
-		$this->mainTemplate->addJavaScript('components/Base3/ClientStack/assetloader/assetloader.min.js');
+        protected function getPresentationHtml(array $a_properties, string $plugin_version): string {
 
-		// find display
-		$displays = $this->classmap->getInstances(['interface' => IDisplay::class, 'name' => 'chatbotdisplay']);
-		if (empty($displays)) return 'Display not found.';
-		$display = $displays[0];
+                // include client scripts
+                $this->mainTemplate->addJavaScript('components/Base3/ClientStack/assetloader/assetloader.min.js');
 
-		// configure and output
-		$display->setData($a_properties);
-		return $display->getOutput();
-	}
+                // find display
+                $displays = $this->classmap->getInstances(['interface' => IDisplay::class, 'name' => 'chatbotdisplay']);
+                if (empty($displays)) return 'Display not found.';
+                $display = $displays[0];
+
+                // configure and output
+                $display->setData($a_properties);
+                return $display->getOutput();
+        }
 }
+
