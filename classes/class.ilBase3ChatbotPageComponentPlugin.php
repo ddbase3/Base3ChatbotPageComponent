@@ -1,12 +1,5 @@
-<?php
+<?php declare(strict_types=1);
 
-class ilBase3ChatbotPageComponentPlugin extends ilPageComponentPlugin {
+use Base3\Base3Ilias\PageComponent\AbstractPageComponentPlugin;
 
-	public function getPluginName(): string {
-		return 'Base3ChatbotPageComponent';
-	}
-	
-	public function isValidParentType(string $a_type): bool {
-		return true;
-	}
-}
+class ilBase3ChatbotPageComponentPlugin extends AbstractPageComponentPlugin {}
